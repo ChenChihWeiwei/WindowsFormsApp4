@@ -40,7 +40,7 @@ namespace WindowsFormsApp4
         TimeSpan ts;                                            // 宣告一個時間間隔變數
 
 
-
+        #region-選單-
         // 下拉選單初始化
         private void comboboxInitialzation()
         {
@@ -73,40 +73,35 @@ namespace WindowsFormsApp4
             txtDate.Text = DateTime.Now.ToString("yyyy-MM-dd");  // 顯示日期
             txtWeekDay.Text = DateTime.Now.ToString("dddd");     // 顯示星期幾
         }
+#endregion
 
-
-
-        // 鬧鐘計時器timerAlert_tick事件：每一秒執行一次
-        private void timerAlert_Tick_1(object sender, EventArgs e)
+        #region-播放聲音-
+        private void playBeep(System.Windows.Forms.Timer timer)
         {
-            // 判斷現在時間是不是已經是鬧鐘設定時間？如果時間到了，就要播放鬧鐘聲音
-            if (strSelectTime == DateTime.Now.ToString("HH:mm"))
+            try
             {
-                try
-                {
-                    stopWaveOut();
+                stopWaveOut();
 
-                    // 指定聲音檔的相對路徑，可以使用MP3
-                    string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "alert.wav");
+                // 指定聲音檔的相對路徑，可以使用MP3
+                string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "alert.wav");
 
-                    // 使用 AudioFileReader 來讀取聲音檔
-                    audioFileReader = new AudioFileReader(audioFilePath);
+                // 使用 AudioFileReader 來讀取聲音檔
+                audioFileReader = new AudioFileReader(audioFilePath);
 
-                    // 初始化 WaveOutEvent
-                    waveOut = new WaveOutEvent();
-                    waveOut.Init(audioFileReader);
+                // 初始化 WaveOutEvent
+                waveOut = new WaveOutEvent();
+                waveOut.Init(audioFileReader);
 
-                    // 播放聲音檔
-                    waveOut.Play();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("無法播放聲音檔，錯誤資訊: " + ex.Message);
-                }
-                finally
-                {
-                    timerAlert.Stop(); // 停止鬧鐘計時器
-                }
+                // 播放聲音檔
+                waveOut.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("無法播放聲音檔，錯誤資訊: " + ex.Message);
+            }
+            finally
+            {
+                timer.Stop(); // 停止鬧鐘計時器
             }
         }
         private void stopWaveOut()
@@ -118,6 +113,17 @@ namespace WindowsFormsApp4
                 waveOut.Dispose();
                 waveOut = null;
             }
+        }
+        #endregion
+
+        #region-鬧鐘-
+
+        // 鬧鐘計時器timerAlert_tick事件：每一秒執行一次
+        private void timerAlert_Tick_1(object sender, EventArgs e)
+        {
+            // 判斷現在時間是不是已經是鬧鐘設定時間？如果時間到了，就要播放鬧鐘聲音
+            if (strSelectTime == DateTime.Now.ToString("HH:mm"))
+                playBeep(timerAlert);
         }
 
         private void btnSetAlert_Click(object sender, EventArgs e)
@@ -135,12 +141,10 @@ namespace WindowsFormsApp4
             btnSetAlert.Enabled = true;
             btnCancelAlert.Enabled = false;
         }
+#endregion
 
-
-
+        #region-碼表-
         // timerStopWatch_tick：每毫秒執行一次，所以更新的速度會比較快
-        
-
         private void timerStopWatch_Tick(object sender, EventArgs e)
         {
             txtStopWatch.Text = sw.Elapsed.ToString("hh':'mm':'ss':'fff");    // 顯示碼表時間
@@ -206,43 +210,17 @@ namespace WindowsFormsApp4
                 i--;
             }
         }
+#endregion
 
-        
-
-        // timerCountDown_tick：每一秒執行一次
+        #region-倒數-
+        // 倒數計時器timerCountDown_Tick事件：每一秒執行一次
         private void timerCountDown_Tick(object sender, EventArgs e)
         {
             txtCountDown.Text = ts.ToString("hh':'mm':'ss");    // 顯示時間
             ts = ts.Subtract(TimeSpan.FromSeconds(1));          // 每一秒鐘將顯示時間減掉一秒
 
             if (txtCountDown.Text == "00:00:00")
-            {
-                try
-                {
-                    stopWaveOut();
-
-                    // 指定聲音檔的相對路徑，可以使用MP3
-                    string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "alert.wav");
-
-                    // 使用 AudioFileReader 來讀取聲音檔
-                    audioFileReader = new AudioFileReader(audioFilePath);
-
-                    // 初始化 WaveOutEvent
-                    waveOut = new WaveOutEvent();
-                    waveOut.Init(audioFileReader);
-
-                    // 播放聲音檔
-                    waveOut.Play();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("無法播放聲音檔，錯誤資訊: " + ex.Message);
-                }
-                finally
-                {
-                    timerCountDown.Stop();         // 停止鬧鐘計時器
-                }
-            }
+                playBeep(timerCountDown);
         }
 
         private void btnCountStart_Click(object sender, EventArgs e)
@@ -274,5 +252,6 @@ namespace WindowsFormsApp4
             cmbCountMin.SelectedIndex = 0;
             cmbCountSecond.SelectedIndex = 0;
         }
+        #endregion
     }
 }
