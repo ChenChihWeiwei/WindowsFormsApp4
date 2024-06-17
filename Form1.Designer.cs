@@ -55,9 +55,21 @@ namespace WindowsFormsApp4
             this.timerClcok = new System.Windows.Forms.Timer(this.components);
             this.timerAlert = new System.Windows.Forms.Timer(this.components);
             this.timerStopWatch = new System.Windows.Forms.Timer(this.components);
+            this.txtCountDown = new System.Windows.Forms.TextBox();
+            this.cmbCountHour = new System.Windows.Forms.ComboBox();
+            this.cmbCountMin = new System.Windows.Forms.ComboBox();
+            this.cmbCountSecond = new System.Windows.Forms.ComboBox();
+            this.btnCountStart = new System.Windows.Forms.Button();
+            this.btnCountPause = new System.Windows.Forms.Button();
+            this.btnCountStop = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.timerCountDown = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -74,6 +86,7 @@ namespace WindowsFormsApp4
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.cmbMin);
             this.tabPage1.Controls.Add(this.cmbHour);
@@ -245,6 +258,7 @@ namespace WindowsFormsApp4
             // 
             this.txtStopWatch.BackColor = System.Drawing.SystemColors.Menu;
             this.txtStopWatch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtStopWatch.Enabled = false;
             this.txtStopWatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStopWatch.Location = new System.Drawing.Point(73, 46);
             this.txtStopWatch.Name = "txtStopWatch";
@@ -257,6 +271,7 @@ namespace WindowsFormsApp4
             // 
             this.listStopWatchLog.BackColor = System.Drawing.Color.White;
             this.listStopWatchLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listStopWatchLog.Enabled = false;
             this.listStopWatchLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listStopWatchLog.FormattingEnabled = true;
             this.listStopWatchLog.ItemHeight = 25;
@@ -267,6 +282,15 @@ namespace WindowsFormsApp4
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Controls.Add(this.label3);
+            this.tabPage3.Controls.Add(this.btnCountStop);
+            this.tabPage3.Controls.Add(this.btnCountPause);
+            this.tabPage3.Controls.Add(this.btnCountStart);
+            this.tabPage3.Controls.Add(this.cmbCountSecond);
+            this.tabPage3.Controls.Add(this.cmbCountMin);
+            this.tabPage3.Controls.Add(this.cmbCountHour);
+            this.tabPage3.Controls.Add(this.txtCountDown);
             this.tabPage3.Location = new System.Drawing.Point(4, 34);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(746, 379);
@@ -287,6 +311,107 @@ namespace WindowsFormsApp4
             this.timerStopWatch.Interval = 1;
             this.timerStopWatch.Tick += new System.EventHandler(this.timerStopWatch_Tick);
             // 
+            // txtCountDown
+            // 
+            this.txtCountDown.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtCountDown.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCountDown.Enabled = false;
+            this.txtCountDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCountDown.Location = new System.Drawing.Point(96, 43);
+            this.txtCountDown.Name = "txtCountDown";
+            this.txtCountDown.Size = new System.Drawing.Size(584, 73);
+            this.txtCountDown.TabIndex = 0;
+            this.txtCountDown.Text = "00:00:00";
+            this.txtCountDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // cmbCountHour
+            // 
+            this.cmbCountHour.FormattingEnabled = true;
+            this.cmbCountHour.Location = new System.Drawing.Point(145, 138);
+            this.cmbCountHour.Name = "cmbCountHour";
+            this.cmbCountHour.Size = new System.Drawing.Size(125, 33);
+            this.cmbCountHour.TabIndex = 1;
+            // 
+            // cmbCountMin
+            // 
+            this.cmbCountMin.FormattingEnabled = true;
+            this.cmbCountMin.Location = new System.Drawing.Point(306, 138);
+            this.cmbCountMin.Name = "cmbCountMin";
+            this.cmbCountMin.Size = new System.Drawing.Size(125, 33);
+            this.cmbCountMin.TabIndex = 2;
+            // 
+            // cmbCountSecond
+            // 
+            this.cmbCountSecond.FormattingEnabled = true;
+            this.cmbCountSecond.Location = new System.Drawing.Point(477, 138);
+            this.cmbCountSecond.Name = "cmbCountSecond";
+            this.cmbCountSecond.Size = new System.Drawing.Size(125, 33);
+            this.cmbCountSecond.TabIndex = 3;
+            // 
+            // btnCountStart
+            // 
+            this.btnCountStart.Location = new System.Drawing.Point(282, 191);
+            this.btnCountStart.Name = "btnCountStart";
+            this.btnCountStart.Size = new System.Drawing.Size(178, 42);
+            this.btnCountStart.TabIndex = 4;
+            this.btnCountStart.Text = "開始倒數";
+            this.btnCountStart.UseVisualStyleBackColor = true;
+            this.btnCountStart.Click += new System.EventHandler(this.btnCountStart_Click);
+            // 
+            // btnCountPause
+            // 
+            this.btnCountPause.Location = new System.Drawing.Point(282, 252);
+            this.btnCountPause.Name = "btnCountPause";
+            this.btnCountPause.Size = new System.Drawing.Size(178, 42);
+            this.btnCountPause.TabIndex = 5;
+            this.btnCountPause.Text = "暫停";
+            this.btnCountPause.UseVisualStyleBackColor = true;
+            this.btnCountPause.Click += new System.EventHandler(this.btnCountPause_Click);
+            // 
+            // btnCountStop
+            // 
+            this.btnCountStop.Location = new System.Drawing.Point(282, 309);
+            this.btnCountStop.Name = "btnCountStop";
+            this.btnCountStop.Size = new System.Drawing.Size(178, 42);
+            this.btnCountStop.TabIndex = 6;
+            this.btnCountStop.Text = "停止";
+            this.btnCountStop.UseVisualStyleBackColor = true;
+            this.btnCountStop.Click += new System.EventHandler(this.btnCountStop_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(362, 174);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 31);
+            this.label2.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(276, 138);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(22, 31);
+            this.label3.TabIndex = 7;
+            this.label3.Text = ":";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(449, 138);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(22, 31);
+            this.label4.TabIndex = 8;
+            this.label4.Text = ":";
+            // 
+            // timerCountDown
+            // 
+            this.timerCountDown.Interval = 1;
+            this.timerCountDown.Tick += new System.EventHandler(this.timerCountDown_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,6 +426,8 @@ namespace WindowsFormsApp4
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -334,6 +461,17 @@ namespace WindowsFormsApp4
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox txtStopWatch;
         private System.Windows.Forms.Timer timerStopWatch;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnCountStop;
+        private System.Windows.Forms.Button btnCountPause;
+        private System.Windows.Forms.Button btnCountStart;
+        private System.Windows.Forms.ComboBox cmbCountSecond;
+        private System.Windows.Forms.ComboBox cmbCountMin;
+        private System.Windows.Forms.ComboBox cmbCountHour;
+        private System.Windows.Forms.TextBox txtCountDown;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Timer timerCountDown;
     }
 }
 
